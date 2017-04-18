@@ -1,7 +1,9 @@
 package com.cgn.reservation.service;
 
+import com.cgn.reservation.dao.ContractEntity;
 import com.cgn.reservation.dao.CountryEntity;
 import com.cgn.reservation.dao.HotelEntity;
+import com.cgn.reservation.dao.RoomContractEntity;
 import com.cgn.reservation.util.SingletonSessionFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -30,8 +32,8 @@ public class SearchDataRequest
         {
             Session session=sessionFactory.openSession();
             Transaction t = session.beginTransaction();
-
-            Query query = session.createQuery("from CountryEntity join CityEntity ");
+			int city=1;
+            Query query = session.createQuery("from CountryEntity join CityEntity as c where c.cId= :citys").setParameter( "citys",city );
             list = query.list();
             System.out.println(list.get( 0 ).toString());
             t.commit();
@@ -48,7 +50,7 @@ public class SearchDataRequest
         return list;
     }
 
-    public List getHotelsByCountry(long id)
+    public List getHotelsByCity(long city_id)
 	{
 		List list=new ArrayList( 10 );
 		try
@@ -56,7 +58,7 @@ public class SearchDataRequest
 			Session session=sessionFactory.openSession();
 			Transaction t = session.beginTransaction();
 
-			Query query = session.createQuery("from HotelEntity ");
+			Query query = session.createQuery("from HotelEntity");
 			list = query.list();
 			System.out.println(list.get( 0 ).toString());
 			t.commit();
@@ -98,23 +100,21 @@ public class SearchDataRequest
         }
     }
 
-	public Map<Long,String> getHotelNames(long city)
+	/*public Map<Long,String> getHotelNames(long city)
 	{
 		Session session=sessionFactory.openSession();
 		session.beginTransaction();
-		List<HotelEntity> list=session.createQuery( "from HotelEntity where city =: c  " )
+		List<HotelEntity> list=session.createQuery( "from HotelEntity join CityEntity where CityEntity .cId=: c  " )
 				.setParameter( "c" , city )
 				.list();
 		Map<Long,String> map=new HashMap<Long, String>( 100 );
 
 		for(HotelEntity hotelEntity:list)
-			map.put( hotelEntity.getId(), hotelEntity.getName() );
+			//map.put( hotelEntity.getId(), hotelEntity.getName() );
 
 		return map;
 
-	}
+	}*/
 
-	public void addContrctData(){
 
-	}
 }

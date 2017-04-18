@@ -32,6 +32,7 @@
        <mapping class="com.cgn.reservation.dao.RoomEntity"/>
        <mapping class="com.cgn.reservation.dao.RoomContractEntity"/>
         <mapping class="com.cgn.reservation.dao.CityEntity"/>
+        <mapping class="com.cgn.reservation.dao.SearchRoomMvEntity"></mapping>
         <!-- DB schema will be updated if needed -->
 
     </session-factory>

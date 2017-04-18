@@ -1,9 +1,10 @@
 package com.cgn.reservation.dao;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
- * Created by thilinap on 4/17/2017.
+ * Created by thilinap on 4/18/2017.
  */
 @Entity
 @Table(name = "CITY", schema = "THILINAP", catalog = "")
@@ -11,6 +12,8 @@ public class CityEntity
 {
 	private int cId;
 	private String name;
+	private CountryEntity countryByCountryId;
+	private Collection<HotelEntity> hotelsByCId;
 
 	@Id
 	@Column(name = "C_ID")
@@ -60,5 +63,28 @@ public class CityEntity
 		int result = cId;
 		result = 31 * result + ( name != null ? name.hashCode() : 0 );
 		return result;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "COUNTRY_ID", referencedColumnName = "ID", nullable = false)
+	public CountryEntity getCountryByCountryId()
+	{
+		return countryByCountryId;
+	}
+
+	public void setCountryByCountryId( CountryEntity countryByCountryId )
+	{
+		this.countryByCountryId = countryByCountryId;
+	}
+
+	@OneToMany(mappedBy = "cityByCityCId")
+	public Collection<HotelEntity> getHotelsByCId()
+	{
+		return hotelsByCId;
+	}
+
+	public void setHotelsByCId( Collection<HotelEntity> hotelsByCId )
+	{
+		this.hotelsByCId = hotelsByCId;
 	}
 }

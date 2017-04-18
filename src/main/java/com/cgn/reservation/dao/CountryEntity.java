@@ -1,9 +1,10 @@
 package com.cgn.reservation.dao;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
- * Created by thilinap on 4/17/2017.
+ * Created by thilinap on 4/18/2017.
  */
 @Entity
 @Table(name = "COUNTRY", schema = "THILINAP", catalog = "")
@@ -11,6 +12,7 @@ public class CountryEntity
 {
 	private byte id;
 	private String name;
+	private Collection<CityEntity> citiesById;
 
 	@Id
 	@Column(name = "ID")
@@ -60,5 +62,16 @@ public class CountryEntity
 		int result = ( int ) id;
 		result = 31 * result + ( name != null ? name.hashCode() : 0 );
 		return result;
+	}
+
+	@OneToMany(mappedBy = "countryByCountryId")
+	public Collection<CityEntity> getCitiesById()
+	{
+		return citiesById;
+	}
+
+	public void setCitiesById( Collection<CityEntity> citiesById )
+	{
+		this.citiesById = citiesById;
 	}
 }

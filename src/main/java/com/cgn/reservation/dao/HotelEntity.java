@@ -1,27 +1,30 @@
 package com.cgn.reservation.dao;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
- * Created by thilinap on 4/17/2017.
+ * Created by thilinap on 4/18/2017.
  */
 @Entity
 @Table(name = "HOTEL", schema = "THILINAP", catalog = "")
 public class HotelEntity
 {
-	private long id;
+	private int id;
 	private String name;
 	private String state;
-	private Boolean rating;
+	private Integer rating;
+	private CityEntity cityByCityCId;
+	private Collection<RoomEntity> roomsById;
 
 	@Id
 	@Column(name = "ID")
-	public long getId()
+	public int getId()
 	{
 		return id;
 	}
 
-	public void setId( long id )
+	public void setId( int id )
 	{
 		this.id = id;
 	}
@@ -52,12 +55,12 @@ public class HotelEntity
 
 	@Basic
 	@Column(name = "RATING")
-	public Boolean getRating()
+	public Integer getRating()
 	{
 		return rating;
 	}
 
-	public void setRating( Boolean rating )
+	public void setRating( Integer rating )
 	{
 		this.rating = rating;
 	}
@@ -87,10 +90,33 @@ public class HotelEntity
 	@Override
 	public int hashCode()
 	{
-		int result = ( int ) ( id ^ ( id >>> 32 ) );
+		int result = id;
 		result = 31 * result + ( name != null ? name.hashCode() : 0 );
 		result = 31 * result + ( state != null ? state.hashCode() : 0 );
 		result = 31 * result + ( rating != null ? rating.hashCode() : 0 );
 		return result;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "CITY_C_ID", referencedColumnName = "C_ID", nullable = false)
+	public CityEntity getCityByCityCId()
+	{
+		return cityByCityCId;
+	}
+
+	public void setCityByCityCId( CityEntity cityByCityCId )
+	{
+		this.cityByCityCId = cityByCityCId;
+	}
+
+	@OneToMany(mappedBy = "hotelByHotelId")
+	public Collection<RoomEntity> getRoomsById()
+	{
+		return roomsById;
+	}
+
+	public void setRoomsById( Collection<RoomEntity> roomsById )
+	{
+		this.roomsById = roomsById;
 	}
 }

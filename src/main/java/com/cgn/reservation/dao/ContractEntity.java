@@ -2,29 +2,29 @@ package com.cgn.reservation.dao;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.util.Collection;
 
 /**
- * Created by thilinap on 4/17/2017.
+ * Created by thilinap on 4/18/2017.
  */
 @Entity
 @Table(name = "CONTRACT", schema = "THILINAP", catalog = "")
 public class ContractEntity
 {
-	private long id;
+	private int id;
 	private Time validFrom;
 	private Time validTo;
-	private Byte validDates;
-
-
+	private Integer validDates;
+	private Collection<RoomContractEntity> roomContractsById;
 
 	@Id
 	@Column(name = "ID")
-	public long getId()
+	public int getId()
 	{
 		return id;
 	}
 
-	public void setId( long id )
+	public void setId( int id )
 	{
 		this.id = id;
 	}
@@ -55,12 +55,12 @@ public class ContractEntity
 
 	@Basic
 	@Column(name = "VALID_DATES")
-	public Byte getValidDates()
+	public Integer getValidDates()
 	{
 		return validDates;
 	}
 
-	public void setValidDates( Byte validDates )
+	public void setValidDates( Integer validDates )
 	{
 		this.validDates = validDates;
 	}
@@ -90,10 +90,21 @@ public class ContractEntity
 	@Override
 	public int hashCode()
 	{
-		int result = ( int ) ( id ^ ( id >>> 32 ) );
+		int result = id;
 		result = 31 * result + ( validFrom != null ? validFrom.hashCode() : 0 );
 		result = 31 * result + ( validTo != null ? validTo.hashCode() : 0 );
 		result = 31 * result + ( validDates != null ? validDates.hashCode() : 0 );
 		return result;
+	}
+
+	@OneToMany(mappedBy = "contractByContractId")
+	public Collection<RoomContractEntity> getRoomContractsById()
+	{
+		return roomContractsById;
+	}
+
+	public void setRoomContractsById( Collection<RoomContractEntity> roomContractsById )
+	{
+		this.roomContractsById = roomContractsById;
 	}
 }

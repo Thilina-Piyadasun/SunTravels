@@ -2,6 +2,7 @@ package com.cgn.reservation.configuration;
 
 
 import com.cgn.reservation.service.SearchDataRequest;
+import com.cgn.reservation.service.SearchHotel;
 import com.github.cage.Cage;
 import com.google.gson.Gson;
 import org.springframework.context.MessageSource;
@@ -48,14 +49,18 @@ public class AppConfiguration extends WebMvcConfigurerAdapter
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
 
+	@Bean
+	public SearchDataRequest searchDataRequest(){
+		return new SearchDataRequest();
+	}
 
-		@Bean
-		public SearchDataRequest searchDataRequest(){
-			return new SearchDataRequest();
-		}
+	@Bean
+	public SearchHotel searchHotel(){
+		return new SearchHotel();
+	}
 
-		@Bean
-		public Gson gson(){
-			return new Gson();
-		}
+	@Bean
+	public Gson gson(){
+		return new Gson();
+	}
 }

@@ -3,16 +3,16 @@ package com.cgn.reservation.dao;
 import javax.persistence.*;
 
 /**
- * Created by thilinap on 4/17/2017.
+ * Created by thilinap on 4/18/2017.
  */
 @Entity
 @Table(name = "ROOM_CONTRACT", schema = "THILINAP", catalog = "")
 public class RoomContractEntity
 {
 	private long price;
-	private long roomContractId;
-
-
+	private int roomContractId;
+	private ContractEntity contractByContractId;
+	private RoomEntity roomByRoomId;
 
 	@Basic
 	@Column(name = "PRICE")
@@ -28,12 +28,12 @@ public class RoomContractEntity
 
 	@Id
 	@Column(name = "ROOM_CONTRACT_ID")
-	public long getRoomContractId()
+	public int getRoomContractId()
 	{
 		return roomContractId;
 	}
 
-	public void setRoomContractId( long roomContractId )
+	public void setRoomContractId( int roomContractId )
 	{
 		this.roomContractId = roomContractId;
 	}
@@ -60,7 +60,31 @@ public class RoomContractEntity
 	public int hashCode()
 	{
 		int result = ( int ) ( price ^ ( price >>> 32 ) );
-		result = 31 * result + ( int ) ( roomContractId ^ ( roomContractId >>> 32 ) );
+		result = 31 * result + roomContractId;
 		return result;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "CONTRACT_ID", referencedColumnName = "ID", nullable = false)
+	public ContractEntity getContractByContractId()
+	{
+		return contractByContractId;
+	}
+
+	public void setContractByContractId( ContractEntity contractByContractId )
+	{
+		this.contractByContractId = contractByContractId;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "ROOM_ID", referencedColumnName = "ID", nullable = false)
+	public RoomEntity getRoomByRoomId()
+	{
+		return roomByRoomId;
+	}
+
+	public void setRoomByRoomId( RoomEntity roomByRoomId )
+	{
+		this.roomByRoomId = roomByRoomId;
 	}
 }

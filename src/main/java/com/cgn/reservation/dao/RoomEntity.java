@@ -1,27 +1,30 @@
 package com.cgn.reservation.dao;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
- * Created by thilinap on 4/17/2017.
+ * Created by thilinap on 4/18/2017.
  */
 @Entity
 @Table(name = "ROOM", schema = "THILINAP", catalog = "")
 public class RoomEntity
 {
-	private long id;
+	private int id;
 	private String type;
-	private long maxAdults;
+	private int maxAdults;
 	private String description;
+	private HotelEntity hotelByHotelId;
+	private Collection<RoomContractEntity> roomContractsById;
 
 	@Id
 	@Column(name = "ID")
-	public long getId()
+	public int getId()
 	{
 		return id;
 	}
 
-	public void setId( long id )
+	public void setId( int id )
 	{
 		this.id = id;
 	}
@@ -40,12 +43,12 @@ public class RoomEntity
 
 	@Basic
 	@Column(name = "MAX_ADULTS")
-	public long getMaxAdults()
+	public int getMaxAdults()
 	{
 		return maxAdults;
 	}
 
-	public void setMaxAdults( long maxAdults )
+	public void setMaxAdults( int maxAdults )
 	{
 		this.maxAdults = maxAdults;
 	}
@@ -87,10 +90,33 @@ public class RoomEntity
 	@Override
 	public int hashCode()
 	{
-		int result = ( int ) ( id ^ ( id >>> 32 ) );
+		int result = id;
 		result = 31 * result + ( type != null ? type.hashCode() : 0 );
-		result = 31 * result + ( int ) ( maxAdults ^ ( maxAdults >>> 32 ) );
+		result = 31 * result + maxAdults;
 		result = 31 * result + ( description != null ? description.hashCode() : 0 );
 		return result;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "HOTEL_ID", referencedColumnName = "ID", nullable = false)
+	public HotelEntity getHotelByHotelId()
+	{
+		return hotelByHotelId;
+	}
+
+	public void setHotelByHotelId( HotelEntity hotelByHotelId )
+	{
+		this.hotelByHotelId = hotelByHotelId;
+	}
+
+	@OneToMany(mappedBy = "roomByRoomId")
+	public Collection<RoomContractEntity> getRoomContractsById()
+	{
+		return roomContractsById;
+	}
+
+	public void setRoomContractsById( Collection<RoomContractEntity> roomContractsById )
+	{
+		this.roomContractsById = roomContractsById;
 	}
 }

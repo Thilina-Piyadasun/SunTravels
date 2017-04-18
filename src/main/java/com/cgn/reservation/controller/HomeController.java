@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.cgn.reservation.service.SearchDataRequest;
+import com.cgn.reservation.service.SearchHotel;
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class HomeController
 	private SearchDataRequest searchDataRequest;
 
 	@Autowired
+	private SearchHotel searchHotel;
+
+	@Autowired
 	private Gson gson;
 
 	@ResponseBody
@@ -27,7 +31,7 @@ public class HomeController
 	{
 
 		long millis1 = System.currentTimeMillis();
-		List list = searchDataRequest.getData();
+		List list = searchHotel.search();
 		long millis2 = System.currentTimeMillis();
 		System.out.println( millis2 - millis1 );
 		return gson.toJson( list );
@@ -40,7 +44,8 @@ public class HomeController
 
 		long millis1 = System.currentTimeMillis();
 		long id = 3;
-		List list = searchDataRequest.getHotelsByCountry( id );
+		List list = searchDataRequest.getHotelsByCity( id );
+
 		long millis2 = System.currentTimeMillis();
 		System.out.println( millis2 - millis1 );
 		return gson.toJson( list );
@@ -50,7 +55,7 @@ public class HomeController
 	@RequestMapping
 	public String getHotelNames( @RequestParam("city") int city )
 	{
-		return gson.toJson( searchDataRequest.getHotelNames( city ) );
+		return gson.toJson( searchDataRequest.getHotelsByCity( city ) );
 	}
 
 }
