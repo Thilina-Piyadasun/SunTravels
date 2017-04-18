@@ -8,9 +8,29 @@ public class SearchResponseBean
 	private long hotelID;
 	private String hotelName;
 	private String city;
-	private float price;
+	private double price;
 	private int rating;
 	private boolean avaliability_status;
+
+	public long getHotelID()
+	{
+		return hotelID;
+	}
+
+	public void setHotelID( long hotelID )
+	{
+		this.hotelID = hotelID;
+	}
+
+	public int getRating()
+	{
+		return rating;
+	}
+
+	public void setRating( int rating )
+	{
+		this.rating = rating;
+	}
 
 	public String getHotelName()
 	{
@@ -32,12 +52,12 @@ public class SearchResponseBean
 		this.city = city;
 	}
 
-	public float getPrice()
+	public double getPrice()
 	{
 		return price;
 	}
 
-	public void setPrice( float price )
+	public void setPrice( double price )
 	{
 		this.price = price;
 	}

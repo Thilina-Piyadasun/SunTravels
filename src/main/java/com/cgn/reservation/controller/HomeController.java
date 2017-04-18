@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.cgn.reservation.beans.SearchRequestBean;
 import com.cgn.reservation.service.SearchDataRequest;
 import com.cgn.reservation.service.SearchHotel;
 import com.google.gson.Gson;
@@ -26,15 +28,21 @@ public class HomeController
 	private Gson gson;
 
 	@ResponseBody
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String getData( HttpServletRequest request, HttpServletResponse resp ) throws IOException
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public String getData( @RequestBody SearchRequestBean requestBean )
 	{
-
-		long millis1 = System.currentTimeMillis();
-		List list = searchHotel.search();
-		long millis2 = System.currentTimeMillis();
-		System.out.println( millis2 - millis1 );
-		return gson.toJson( list );
+		try
+		{
+			long millis1 = System.currentTimeMillis();
+			List list = searchHotel.search(requestBean);
+			long millis2 = System.currentTimeMillis();
+			System.out.println( millis2 - millis1 );
+			return gson.toJson( list );
+		}
+		catch ( Exception e){
+			new Exception( "Exception occured in Home controller line : 41" );
+		}
+		return null;
 	}
 
 	@ResponseBody
@@ -52,7 +60,7 @@ public class HomeController
 	}
 
 	@ResponseBody
-	@RequestMapping
+	@RequestMapping(value = "/search/city", method = RequestMethod.GET)
 	public String getHotelNames( @RequestParam("city") int city )
 	{
 		return gson.toJson( searchDataRequest.getHotelsByCity( city ) );

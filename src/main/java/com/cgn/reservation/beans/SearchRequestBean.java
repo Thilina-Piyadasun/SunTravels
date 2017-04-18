@@ -1,5 +1,7 @@
 package com.cgn.reservation.beans;
 
+import oracle.sql.DATE;
+
 import java.util.ArrayList;
 
 /**
@@ -7,16 +9,19 @@ import java.util.ArrayList;
  */
 public class SearchRequestBean
 {
-	private long hotelID;
-
+	private int hotelID;
+	private int adults;
+	private DATE checkIN;
+	private DATE checkOut;
+//add dates
 	private int[][] roomRequestDetails;
 
-	public long getHotelID()
+	public int getHotelID()
 	{
 		return hotelID;
 	}
 
-	public void setHotelID( long hotelID )
+	public void setHotelID( int hotelID )
 	{
 		this.hotelID = hotelID;
 	}
@@ -29,5 +34,35 @@ public class SearchRequestBean
 	public void setRoomRequestDetails( int[][] roomRequestDetails )
 	{
 		this.roomRequestDetails = roomRequestDetails;
+	}
+
+	public int getAdults()
+	{
+		return adults;
+	}
+
+	public void setAdults( int adults )
+	{
+		this.adults = adults;
+	}
+
+	public DATE getCheckIN()
+	{
+		return checkIN;
+	}
+
+	public void setCheckIN( DATE checkIN )
+	{
+		this.checkIN = checkIN;
+	}
+
+	public DATE getCheckOut()
+	{
+		return checkOut;
+	}
+
+	public void setCheckOut( DATE checkOut )
+	{
+		this.checkOut = checkOut;
 	}
 }
