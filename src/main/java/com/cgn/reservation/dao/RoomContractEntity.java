@@ -3,7 +3,7 @@ package com.cgn.reservation.dao;
 import javax.persistence.*;
 
 /**
- * Created by thilinap on 4/18/2017.
+ * Created by thilinap on 4/19/2017.
  */
 @Entity
 @Table(name = "ROOM_CONTRACT", schema = "THILINAP", catalog = "")

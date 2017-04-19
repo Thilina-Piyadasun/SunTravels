@@ -1,10 +1,9 @@
 package com.cgn.reservation.dao;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 /**
- * Created by thilinap on 4/18/2017.
+ * Created by thilinap on 4/19/2017.
  */
 @Entity
 @Table(name = "CITY", schema = "THILINAP", catalog = "")
@@ -13,7 +12,6 @@ public class CityEntity
 	private int cId;
 	private String name;
 	private CountryEntity countryByCountryId;
-	private Collection<HotelEntity> hotelsByCId;
 
 	@Id
 	@Column(name = "C_ID")
@@ -75,16 +73,5 @@ public class CityEntity
 	public void setCountryByCountryId( CountryEntity countryByCountryId )
 	{
 		this.countryByCountryId = countryByCountryId;
-	}
-
-	@OneToMany(mappedBy = "cityByCityCId")
-	public Collection<HotelEntity> getHotelsByCId()
-	{
-		return hotelsByCId;
-	}
-
-	public void setHotelsByCId( Collection<HotelEntity> hotelsByCId )
-	{
-		this.hotelsByCId = hotelsByCId;
 	}
 }

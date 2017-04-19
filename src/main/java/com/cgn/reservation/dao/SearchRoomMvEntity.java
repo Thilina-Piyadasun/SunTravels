@@ -1,18 +1,18 @@
 package com.cgn.reservation.dao;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
- * Created by thilinap on 4/18/2017.
+ * Created by thilinap on 4/19/2017.
  */
 @Entity
 @Table(name = "SEARCH_ROOM_MV", schema = "THILINAP", catalog = "")
 public class SearchRoomMvEntity
 {
 	private int roomContractId;
-	private Time validFrom;
-	private Time validTo;
+	private Timestamp validFrom;
+	private Timestamp validTo;
 	private long price;
 	private Integer hotelId;
 	private String hotelName;
@@ -40,24 +40,24 @@ public class SearchRoomMvEntity
 
 	@Basic
 	@Column(name = "VALID_FROM")
-	public Time getValidFrom()
+	public Timestamp getValidFrom()
 	{
 		return validFrom;
 	}
 
-	public void setValidFrom( Time validFrom )
+	public void setValidFrom( Timestamp validFrom )
 	{
 		this.validFrom = validFrom;
 	}
 
 	@Basic
 	@Column(name = "VALID_TO")
-	public Time getValidTo()
+	public Timestamp getValidTo()
 	{
 		return validTo;
 	}
 
-	public void setValidTo( Time validTo )
+	public void setValidTo( Timestamp validTo )
 	{
 		this.validTo = validTo;
 	}

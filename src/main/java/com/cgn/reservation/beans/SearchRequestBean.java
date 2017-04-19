@@ -2,6 +2,7 @@ package com.cgn.reservation.beans;
 
 import oracle.sql.DATE;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -11,9 +12,8 @@ public class SearchRequestBean
 {
 	private int hotelID;
 	private int adults;
-	private DATE checkIN;
-	private DATE checkOut;
-//add dates
+	private long  checkIN;
+	private long  checkOut;
 	private int[][] roomRequestDetails;
 
 	public int getHotelID()
@@ -46,22 +46,32 @@ public class SearchRequestBean
 		this.adults = adults;
 	}
 
-	public DATE getCheckIN()
+	public Timestamp getCheckIN()
 	{
-		return checkIN;
+		return new Timestamp( checkIN);
 	}
 
-	public void setCheckIN( DATE checkIN )
+	/*public long getCheckIN()
 	{
+		return  checkIN;
+	}*/
+	public void setCheckIN( long checkIN )
+	{
+
 		this.checkIN = checkIN;
 	}
 
-	public DATE getCheckOut()
+	public Timestamp getCheckOut()
+	{
+		return new Timestamp(checkOut);
+	}
+	/*public long getCheckOut()
 	{
 		return checkOut;
-	}
+	}*/
 
-	public void setCheckOut( DATE checkOut )
+
+	public void setCheckOut( long checkOut )
 	{
 		this.checkOut = checkOut;
 	}

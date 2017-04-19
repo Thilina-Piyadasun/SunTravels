@@ -4,7 +4,7 @@ package com.cgn.reservation.configuration;
 import com.cgn.reservation.beans.SearchResponseBean;
 import com.cgn.reservation.service.Pricing;
 import com.cgn.reservation.util.Converter;
-import com.cgn.reservation.service.SearchDataRequest;
+import com.cgn.reservation.service.DataRequest;
 import com.cgn.reservation.service.SearchHotel;
 import com.google.gson.Gson;
 import org.springframework.context.MessageSource;
@@ -45,8 +45,8 @@ public class AppConfiguration extends WebMvcConfigurerAdapter
 	}
 
 	@Bean
-	public SearchDataRequest searchDataRequest(){
-		return new SearchDataRequest();
+	public DataRequest searchDataRequest(){
+		return new DataRequest();
 	}
 
 	@Bean

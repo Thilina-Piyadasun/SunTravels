@@ -1,17 +1,14 @@
 package com.cgn.reservation.service;
 
-import com.cgn.reservation.dao.ContractEntity;
-import com.cgn.reservation.dao.RoomContractEntity;
+import com.cgn.reservation.dao.*;
 import com.cgn.reservation.util.SingletonSessionFactory;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.classic.Lifecycle;
 
-import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.Date;
 
 /**
  * Created by thilinap on 4/17/2017.
@@ -30,56 +27,73 @@ public class AddContractData
 
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Time t1 = null;
-		Time t2 = null;
-		/*try
-		{
-			String s = "2017/05/03 21:02:44";
-			String s2 = "2013/12/03 21:02:44";
-			SimpleDateFormat sdf = new SimpleDateFormat( "yyyy/mm/dd hh24:mi:ss" );
-			long ms = sdf.parse( s ).getTime();
-			long ms2 = sdf.parse( s2 ).getTime();
-			t1 = new Time( ms );
-			t2 = new Time( ms2 );
+		Timestamp t1=new Timestamp( System.currentTimeMillis() );
+		Timestamp t2=new Timestamp( System.currentTimeMillis() );
 
-		}
-		catch ( Exception e )
-		{
-			e.printStackTrace();
-		}
-*/
-		ContractEntity contractEntity = new ContractEntity();
-
-		/*contractEntity.setId( 9 );
-		contractEntity.setValidFrom( t1 );
-		contractEntity.setValidTo( t2 );
-		contractEntity.setValidDates( 150 );
-		session.save( contractEntity );
-		session.getTransaction().commit();
-		session.close();*/
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 		try
 		{
-			 session = sessionFactory.openSession();
-			Transaction t = session.beginTransaction();
-
-			Query query = session.createQuery( "from ContractEntity where id=:ids" ).setParameter( "ids",5 );
-			List list = query.list();
-
-				ContractEntity c = ( ContractEntity ) list.get( 0 );
-				System.out.println( c.getValidFrom() );
-
-			t.commit();
-			session.close();
+			Date date1 = dateFormat.parse("03/04/2017");
+			Date date2 = dateFormat.parse("03/04/2018");
+			long time = date1.getTime();
+			long time2 = date2.getTime();
+			t1=new Timestamp(time);
+			t2=new Timestamp(time2);
 
 		}
 		catch ( Exception e )
 		{
 			e.printStackTrace();
 		}
-		finally
-		{
+		ContractEntity contractEntity = new ContractEntity();
 
-		}
+
+		contractEntity.setId( 4 );
+		contractEntity.setValidFrom( t1 );
+		contractEntity.setValidTo( t2 );
+		contractEntity.setValidDates( 365 );
+
+
+		CountryEntity c=new CountryEntity();
+		c.setName( "Austria" );
+		byte id=4;
+		c.setId( id );
+
+		CityEntity city=new CityEntity();
+		city.setName( "Vienna" );
+		city.setcId( 141 );
+		city.setCountryByCountryId(c);
+
+		HotelEntity h=new HotelEntity();
+		h.setName( "Wilhelmshof" );
+		h.setId(1411);
+		h.setRating( 5 );
+		h.setCityByCityCId(city);
+
+		RoomEntity rm=new RoomEntity();
+		rm.setId(14111);
+		rm.setType( "Standard" );
+		rm.setMaxAdults( 3 );
+		rm.setHotelByHotelId( h );
+		rm.setDescription( "description about hotel in Vienna" );
+
+		RoomContractEntity rc=new RoomContractEntity();
+		rc.setRoomContractId( 3);
+		rc.setPrice( 48200 );
+		rc.setRoomByRoomId( rm );
+		rc.setContractByContractId( contractEntity );
+
+		session.save( contractEntity );
+		session.save( c );
+		session.save( city );
+		session.save( h );
+		session.save( rm );
+		session.save( rc );
+		session.getTransaction().commit();
+		session.close();
+
+
+
 	}
 }

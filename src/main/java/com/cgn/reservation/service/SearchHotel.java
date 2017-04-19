@@ -8,8 +8,10 @@ import com.cgn.reservation.util.SingletonSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +35,21 @@ public class SearchHotel
 		Session session = sessionFactory.openSession();
 		try
 		{
+			if(requestBean!=null)
+			{
 
-			Transaction t = session.beginTransaction();
-			list = session.createQuery( "from SearchRoomMvEntity " ).list();
-			t.commit();
+				/*Timestamp in=requestBean.getCheckIN();
+				Timestamp out=requestBean.getCheckOut();*/
+
+				Transaction t = session.beginTransaction();
+
+				list = session.createQuery( "from SearchRoomMvEntity where hotelId=:hotel and  (maxAdults>:adults or maxAdults=:adults )")
+						.setParameter( "hotel",requestBean.getHotelID() )
+						.setParameter(  "adults",requestBean.getAdults())
+						.list();
+
+				t.commit();
+			}
 		}
 		catch ( Exception e )
 		{
@@ -56,8 +69,7 @@ public class SearchHotel
 	public List<SearchResponseBean> generateSearchResponseBeanList( List<SearchRoomMvEntity> entityList ,SearchRequestBean requestBean )
 	{
 		int adults=requestBean.getAdults();
-		//int no_of_dates=converter.get_date_difference(requestBean.getCheckOut(),requestBean.getCheckIN());
-		int no_of_dates=20;
+		int no_of_dates=converter.get_date_difference(requestBean.getCheckOut(),requestBean.getCheckIN());
 		List<SearchResponseBean> responseBeanList=new ArrayList<SearchResponseBean>( 10 );
 
 		try
@@ -73,5 +85,7 @@ public class SearchHotel
 		}
 		return responseBeanList;
 	}
+
+
 
 }
