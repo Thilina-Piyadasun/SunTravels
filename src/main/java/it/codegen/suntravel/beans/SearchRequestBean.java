@@ -1,29 +1,25 @@
-package com.cgn.reservation.beans;
-
-import oracle.sql.DATE;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
+package it.codegen.suntravel.beans;
 
 /**
  * Created by thilinap on 4/17/2017.
  */
 public class SearchRequestBean
 {
-	private int hotelID;
+
+	private int id;
 	private int adults;
 	private long  checkIN;
 	private long  checkOut;
 	private int[][] roomRequestDetails;
 
-	public int getHotelID()
+	public int getId()
 	{
-		return hotelID;
+		return id;
 	}
 
-	public void setHotelID( int hotelID )
+	public void setId( int id )
 	{
-		this.hotelID = hotelID;
+		this.id = id;
 	}
 
 	public int[][] getRoomRequestDetails()
@@ -46,29 +42,29 @@ public class SearchRequestBean
 		this.adults = adults;
 	}
 
-	public Timestamp getCheckIN()
+	/*public Timestamp getCheckIN()
 	{
 		return new Timestamp( checkIN);
-	}
+	}*/
 
-	/*public long getCheckIN()
+	public long getCheckIN()
 	{
 		return  checkIN;
-	}*/
+	}
 	public void setCheckIN( long checkIN )
 	{
 
 		this.checkIN = checkIN;
 	}
 
-	public Timestamp getCheckOut()
+	/*public Timestamp getCheckOut()
 	{
 		return new Timestamp(checkOut);
-	}
-	/*public long getCheckOut()
+	}*/
+	public long getCheckOut()
 	{
 		return checkOut;
-	}*/
+	}
 
 
 	public void setCheckOut( long checkOut )

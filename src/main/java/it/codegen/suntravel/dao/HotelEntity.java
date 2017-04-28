@@ -1,9 +1,9 @@
-package com.cgn.reservation.dao;
+package it.codegen.suntravel.dao;
 
 import javax.persistence.*;
 
 /**
- * Created by thilinap on 4/19/2017.
+ * Created by thilinap on 4/21/2017.
  */
 @Entity
 @Table(name = "HOTEL", schema = "THILINAP", catalog = "")

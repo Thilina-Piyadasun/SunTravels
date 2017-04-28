@@ -12,7 +12,7 @@
             diskExpiryThreadIntervalSeconds="120"
     />
 
-    <cache name="com.cgn.reservation.dao.CountryEntity"
+    <cache name="it.codegen.suntravel.dao.CountryEntity"
            maxElementsInMemory="100"
            eternal="false"
            timeToIdleSeconds="5"

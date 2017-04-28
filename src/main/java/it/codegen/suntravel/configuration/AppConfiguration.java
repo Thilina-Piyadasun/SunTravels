@@ -1,11 +1,9 @@
-package com.cgn.reservation.configuration;
+package it.codegen.suntravel.configuration;
 
 
-import com.cgn.reservation.beans.SearchResponseBean;
-import com.cgn.reservation.service.Pricing;
-import com.cgn.reservation.util.Converter;
-import com.cgn.reservation.service.DataRequest;
-import com.cgn.reservation.service.SearchHotel;
+import it.codegen.suntravel.beans.SearchResponseBean;
+import it.codegen.suntravel.service.*;
+import it.codegen.suntravel.util.Converter;
 import com.google.gson.Gson;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +18,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.cgn.reservation")
+@ComponentScan(basePackages = "it.codegen.suntravel")
 public class AppConfiguration extends WebMvcConfigurerAdapter
 {
 
@@ -67,8 +65,21 @@ public class AppConfiguration extends WebMvcConfigurerAdapter
 	public SearchResponseBean searchResponseBean(){
 		return new SearchResponseBean();
 	}
+
+	@Bean
+	public AddContractData addContractData(){
+		return new AddContractData();
+	}
+
+	@Bean
+	public Availability availability(){
+		return new Availability();
+	}
+
 	@Bean
 	public Gson gson(){
 		return new Gson();
 	}
+
+
 }

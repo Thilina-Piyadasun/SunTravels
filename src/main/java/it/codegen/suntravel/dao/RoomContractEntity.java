@@ -1,9 +1,9 @@
-package com.cgn.reservation.dao;
+package it.codegen.suntravel.dao;
 
 import javax.persistence.*;
 
 /**
- * Created by thilinap on 4/19/2017.
+ * Created by thilinap on 4/21/2017.
  */
 @Entity
 @Table(name = "ROOM_CONTRACT", schema = "THILINAP", catalog = "")
@@ -11,6 +11,9 @@ public class RoomContractEntity
 {
 	private long price;
 	private int roomContractId;
+	private Long avlFrom;
+	private Long avlTo;
+	private Long markUp;
 	private ContractEntity contractByContractId;
 	private RoomEntity roomByRoomId;
 
@@ -38,6 +41,42 @@ public class RoomContractEntity
 		this.roomContractId = roomContractId;
 	}
 
+	@Basic
+	@Column(name = "AVL_FROM")
+	public Long getAvlFrom()
+	{
+		return avlFrom;
+	}
+
+	public void setAvlFrom( Long avlFrom )
+	{
+		this.avlFrom = avlFrom;
+	}
+
+	@Basic
+	@Column(name = "AVL_TO")
+	public Long getAvlTo()
+	{
+		return avlTo;
+	}
+
+	public void setAvlTo( Long avlTo )
+	{
+		this.avlTo = avlTo;
+	}
+
+	@Basic
+	@Column(name = "MARK_UP")
+	public Long getMarkUp()
+	{
+		return markUp;
+	}
+
+	public void setMarkUp( Long markUp )
+	{
+		this.markUp = markUp;
+	}
+
 	@Override
 	public boolean equals( Object o )
 	{
@@ -52,6 +91,12 @@ public class RoomContractEntity
 			return false;
 		if ( roomContractId != that.roomContractId )
 			return false;
+		if ( avlFrom != null ? !avlFrom.equals( that.avlFrom ) : that.avlFrom != null )
+			return false;
+		if ( avlTo != null ? !avlTo.equals( that.avlTo ) : that.avlTo != null )
+			return false;
+		if ( markUp != null ? !markUp.equals( that.markUp ) : that.markUp != null )
+			return false;
 
 		return true;
 	}
@@ -61,6 +106,9 @@ public class RoomContractEntity
 	{
 		int result = ( int ) ( price ^ ( price >>> 32 ) );
 		result = 31 * result + roomContractId;
+		result = 31 * result + ( avlFrom != null ? avlFrom.hashCode() : 0 );
+		result = 31 * result + ( avlTo != null ? avlTo.hashCode() : 0 );
+		result = 31 * result + ( markUp != null ? markUp.hashCode() : 0 );
 		return result;
 	}
 

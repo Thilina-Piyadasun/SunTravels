@@ -1,17 +1,15 @@
-package com.cgn.reservation.service;
+package it.codegen.suntravel.service;
 
-import com.cgn.reservation.beans.SearchRequestBean;
-import com.cgn.reservation.beans.SearchResponseBean;
-import com.cgn.reservation.dao.SearchRoomMvEntity;
-import com.cgn.reservation.util.Converter;
-import com.cgn.reservation.util.SingletonSessionFactory;
+import it.codegen.suntravel.beans.SearchRequestBean;
+import it.codegen.suntravel.beans.SearchResponseBean;
+import it.codegen.suntravel.dao.SearchRoomMvEntity;
+import it.codegen.suntravel.util.Converter;
+import it.codegen.suntravel.util.SingletonSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class SearchHotel
 
 	private SessionFactory sessionFactory = SingletonSessionFactory.getSessionFactory();
 
-	public List<SearchResponseBean> search(SearchRequestBean requestBean)
+	public List<SearchResponseBean> searchByHotel(SearchRequestBean requestBean)
 	{
 
 		List list = new ArrayList( 10 );
@@ -44,7 +42,7 @@ public class SearchHotel
 				Transaction t = session.beginTransaction();
 
 				list = session.createQuery( "from SearchRoomMvEntity where hotelId=:hotel and  (maxAdults>:adults or maxAdults=:adults )")
-						.setParameter( "hotel",requestBean.getHotelID() )
+						.setParameter( "hotel",requestBean.getId() )
 						.setParameter(  "adults",requestBean.getAdults())
 						.list();
 
@@ -62,6 +60,62 @@ public class SearchHotel
 		return generateSearchResponseBeanList(list,requestBean);
 	}
 
+	public List<SearchResponseBean> searchByCity(SearchRequestBean requestBean)
+	{
+
+		List list = new ArrayList( 10 );
+		Session session = sessionFactory.openSession();
+		try
+		{
+			if(requestBean!=null)
+			{
+				Transaction t = session.beginTransaction();
+
+				int[][] roomdet=requestBean.getRoomRequestDetails();
+				int size=roomdet.length;
+
+
+				/*list = session.createQuery( "from SearchRoomMvEntity where validFrom <:lessthan and cityId=:city and  (maxAdults>:adults or maxAdults=:adults )")
+						.setParameter( "city",requestBean.getId() )
+						.setParameter(  "adults",requestBean.getAdults())
+						.setParameter( "lessthan", "TO_DATE( requestBean.getCheckIN() )" )
+						.list();*/
+
+				list = session.createQuery( "select distinct(hotelId) from RoomDetMvEntity where noOfRooms >=:rooms and maxAdults >=:adults")
+						.setParameter( "rooms",roomdet[0][0])
+						.setParameter(  "adults",roomdet[0][1])
+						.list();
+
+				for(int i=1;i<size;i++){
+
+					List list2 = session.createQuery( "select distinct(hotelId) from RoomDetMvEntity where noOfRooms >=:rooms and maxAdults >=:adults and hotelId IN (:li)")
+							.setParameterList( "li",list)
+							.setParameter( "rooms",roomdet[i][0])
+							.setParameter(  "adults",roomdet[i][1])
+							.list();
+					list=list2;
+				}
+				System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+				System.out.println("No of hotels found : "+list.size());
+				list = session.createQuery( "from SearchRoomMvEntity where validFrom<=:from_date and validTo>=:to_date and cityId=:city and hotelId IN (:li)")
+						.setParameterList( "li",list)
+						.setParameter( "from_date",requestBean.getCheckIN() )
+						.setParameter( "to_date",requestBean.getCheckOut() )
+						.setParameter( "city",requestBean.getId())
+						.list();
+				t.commit();
+			}
+		}
+		catch ( Exception e )
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			session.close();
+		}
+		return generateSearchResponseBeanList(list,requestBean);
+	}
 	/*
 	* Convert result set to Response beans list
 	 * Response beanslist send to controller
@@ -76,7 +130,8 @@ public class SearchHotel
 		{
 			for(SearchRoomMvEntity entity:entityList){
 				//calculate price show to customer and update the price in each entity object
-				entity.setPrice( pricing.calculateMarkedUpPrice(entity.getPrice(),adults,no_of_dates) );
+
+				entity.setPrice( pricing.calculateMarkedUpPrice(entity.getPrice(),adults,no_of_dates,entity.getMarkUp()) );
 				responseBeanList.add(converter.convertSearchRoomEntity_to_SearchResponseBean( entity ));
 			}
 		}

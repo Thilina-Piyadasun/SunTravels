@@ -1,4 +1,4 @@
-package com.cgn.reservation.beans;
+package it.codegen.suntravel.beans;
 
 /**
  * Created by thilinap on 4/17/2017.
@@ -7,9 +7,11 @@ public class SearchResponseBean
 {
 	private long hotelID;
 	private String hotelName;
+	private int roomID;
 	private String city;
 	private double price;
 	private int rating;
+	private String roomType;
 	private boolean avaliability_status;
 
 	public long getHotelID()
@@ -70,5 +72,25 @@ public class SearchResponseBean
 	public void setAvaliability_status( boolean avaliability_status )
 	{
 		this.avaliability_status = avaliability_status;
+	}
+
+	public String getRoomType()
+	{
+		return roomType;
+	}
+
+	public void setRoomType( String roomType )
+	{
+		this.roomType = roomType;
+	}
+
+	public int getRoomID()
+	{
+		return roomID;
+	}
+
+	public void setRoomID( int roomID )
+	{
+		this.roomID = roomID;
 	}
 }

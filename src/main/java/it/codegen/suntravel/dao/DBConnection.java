@@ -1,12 +1,9 @@
-package com.cgn.reservation.dao;
+package it.codegen.suntravel.dao;
 
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
-import java.sql.*;
-import java.util.List;
 
 /**
  * Created by acer on 4/10/2017.

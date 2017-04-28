@@ -1,4 +1,4 @@
-package com.cgn.reservation.controller;
+package it.codegen.suntravel.controller;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -7,9 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import com.cgn.reservation.beans.SearchRequestBean;
-import com.cgn.reservation.service.DataRequest;
-import com.cgn.reservation.service.SearchHotel;
+import it.codegen.suntravel.beans.SearchRequestBean;
+import it.codegen.suntravel.service.DataRequest;
+import it.codegen.suntravel.service.SearchHotel;
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,12 @@ public class HomeController
 		try
 		{
 			long millis1 = System.currentTimeMillis();
-			List list = searchHotel.search(requestBean);
+			List list ;
+			int i=2;
+			if(i==1)
+				 list = searchHotel.searchByHotel(requestBean);
+			else
+				 list = searchHotel.searchByCity(requestBean);
 			long millis2 = System.currentTimeMillis();
 			System.out.println( millis2 - millis1 );
 			return gson.toJson( list );
@@ -83,7 +88,7 @@ public class HomeController
 	{
 		SearchRequestBean srb=new SearchRequestBean();
 		srb.setAdults( 3 );
-		srb.setHotelID( 1 );
+		srb.setId( 1 );
 		int[][] arr={{1,2},{2,3}};
 		srb.setRoomRequestDetails( arr );
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -108,5 +113,25 @@ public class HomeController
 		return gson.toJson( srb );
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/getCountry", method = RequestMethod.GET)
+	public String getCountries(){
 
+
+		return gson.toJson( dataRequest.getCountries( ) );
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getCity", method = RequestMethod.GET)
+	public String getCities(@RequestParam byte id){
+		System.out.println(id);
+		return gson.toJson( dataRequest.getCityByCountry( id ) );
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getHotel", method = RequestMethod.GET)
+	public String getCities(@RequestParam int id){
+		System.out.println(id);
+		return gson.toJson( dataRequest.getHotelsByCity( id ) );
+	}
 }

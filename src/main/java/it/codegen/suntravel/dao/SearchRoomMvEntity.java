@@ -1,19 +1,19 @@
-package com.cgn.reservation.dao;
+package it.codegen.suntravel.dao;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 /**
- * Created by thilinap on 4/19/2017.
+ * Created by thilinap on 4/21/2017.
  */
 @Entity
 @Table(name = "SEARCH_ROOM_MV", schema = "THILINAP", catalog = "")
 public class SearchRoomMvEntity
 {
 	private int roomContractId;
-	private Timestamp validFrom;
-	private Timestamp validTo;
+	private Long validFrom;
+	private Long validTo;
 	private long price;
+	private Long markUp;
 	private Integer hotelId;
 	private String hotelName;
 	private Integer rating;
@@ -40,24 +40,24 @@ public class SearchRoomMvEntity
 
 	@Basic
 	@Column(name = "VALID_FROM")
-	public Timestamp getValidFrom()
+	public Long getValidFrom()
 	{
 		return validFrom;
 	}
 
-	public void setValidFrom( Timestamp validFrom )
+	public void setValidFrom( Long validFrom )
 	{
 		this.validFrom = validFrom;
 	}
 
 	@Basic
 	@Column(name = "VALID_TO")
-	public Timestamp getValidTo()
+	public Long getValidTo()
 	{
 		return validTo;
 	}
 
-	public void setValidTo( Timestamp validTo )
+	public void setValidTo( Long validTo )
 	{
 		this.validTo = validTo;
 	}
@@ -72,6 +72,18 @@ public class SearchRoomMvEntity
 	public void setPrice( long price )
 	{
 		this.price = price;
+	}
+
+	@Basic
+	@Column(name = "MARK_UP")
+	public Long getMarkUp()
+	{
+		return markUp;
+	}
+
+	public void setMarkUp( Long markUp )
+	{
+		this.markUp = markUp;
 	}
 
 	@Basic
@@ -224,6 +236,8 @@ public class SearchRoomMvEntity
 			return false;
 		if ( validTo != null ? !validTo.equals( that.validTo ) : that.validTo != null )
 			return false;
+		if ( markUp != null ? !markUp.equals( that.markUp ) : that.markUp != null )
+			return false;
 		if ( hotelId != null ? !hotelId.equals( that.hotelId ) : that.hotelId != null )
 			return false;
 		if ( hotelName != null ? !hotelName.equals( that.hotelName ) : that.hotelName != null )
@@ -257,6 +271,7 @@ public class SearchRoomMvEntity
 		result = 31 * result + ( validFrom != null ? validFrom.hashCode() : 0 );
 		result = 31 * result + ( validTo != null ? validTo.hashCode() : 0 );
 		result = 31 * result + ( int ) ( price ^ ( price >>> 32 ) );
+		result = 31 * result + ( markUp != null ? markUp.hashCode() : 0 );
 		result = 31 * result + ( hotelId != null ? hotelId.hashCode() : 0 );
 		result = 31 * result + ( hotelName != null ? hotelName.hashCode() : 0 );
 		result = 31 * result + ( rating != null ? rating.hashCode() : 0 );

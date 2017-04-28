@@ -1,4 +1,4 @@
-package com.cgn.reservation.configuration;
+package it.codegen.suntravel.configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

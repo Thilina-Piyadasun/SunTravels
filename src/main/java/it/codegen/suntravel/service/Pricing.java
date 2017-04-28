@@ -1,4 +1,4 @@
-package com.cgn.reservation.service;
+package it.codegen.suntravel.service;
 
 /**
  * Created by thilinap on 4/18/2017.
@@ -6,10 +6,10 @@ package com.cgn.reservation.service;
 public class Pricing
 {
 
-	private final double MARK_UP=0.15;
 
-	public long calculateMarkedUpPrice(double initValue,int adults,int dates){
-		return ( long ) (initValue*MARK_UP*adults*dates);
+	public long calculateMarkedUpPrice(long initValue,int adults,int dates,long mark){
+
+		return initValue*mark*adults*dates/100;
 	}
 
 

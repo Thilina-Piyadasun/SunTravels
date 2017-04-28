@@ -1,4 +1,4 @@
-package com.cgn.reservation.util;
+package it.codegen.suntravel.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

@@ -9,11 +9,11 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hoteldb</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password"></property>
-        <mapping class="com.cgn.reservation.dao.ContractEntity"/>
-        <mapping class="com.cgn.reservation.dao.CountryEntity"/>
-        <mapping class="com.cgn.reservation.dao.HotelEntity"/>
-        <mapping class="com.cgn.reservation.dao.RoomEntity"/>
-        <mapping class="com.cgn.reservation.dao.RoomContractEntity"/>
+        <mapping class="it.codegen.suntravel.dao.ContractEntity"/>
+        <mapping class="it.codegen.suntravel.dao.CountryEntity"/>
+        <mapping class="it.codegen.suntravel.dao.HotelEntity"/>
+        <mapping class="it.codegen.suntravel.dao.RoomEntity"/>
+        <mapping class="it.codegen.suntravel.dao.RoomContractEntity"/>
 
 
         <!-- DB schema will be updated if needed -->

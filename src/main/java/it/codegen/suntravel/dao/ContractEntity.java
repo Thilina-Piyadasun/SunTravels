@@ -1,19 +1,18 @@
-package com.cgn.reservation.dao;
+package it.codegen.suntravel.dao;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by thilinap on 4/19/2017.
+ * Created by thilinap on 4/21/2017.
  */
 @Entity
 @Table(name = "CONTRACT", schema = "THILINAP", catalog = "")
 public class ContractEntity
 {
 	private int id;
-	private Timestamp validFrom;
-	private Timestamp validTo;
-	private Integer validDates;
+	private Long validFrom;
+	private Long validTo;
 
 	@Id
 	@Column(name = "ID")
@@ -29,38 +28,26 @@ public class ContractEntity
 
 	@Basic
 	@Column(name = "VALID_FROM")
-	public Timestamp getValidFrom()
+	public Long getValidFrom()
 	{
 		return validFrom;
 	}
 
-	public void setValidFrom( Timestamp validFrom )
+	public void setValidFrom( Long validFrom )
 	{
 		this.validFrom = validFrom;
 	}
 
 	@Basic
 	@Column(name = "VALID_TO")
-	public Timestamp getValidTo()
+	public Long getValidTo()
 	{
 		return validTo;
 	}
 
-	public void setValidTo( Timestamp validTo )
+	public void setValidTo( Long validTo )
 	{
 		this.validTo = validTo;
-	}
-
-	@Basic
-	@Column(name = "VALID_DATES")
-	public Integer getValidDates()
-	{
-		return validDates;
-	}
-
-	public void setValidDates( Integer validDates )
-	{
-		this.validDates = validDates;
 	}
 
 	@Override
@@ -79,8 +66,6 @@ public class ContractEntity
 			return false;
 		if ( validTo != null ? !validTo.equals( that.validTo ) : that.validTo != null )
 			return false;
-		if ( validDates != null ? !validDates.equals( that.validDates ) : that.validDates != null )
-			return false;
 
 		return true;
 	}
@@ -91,7 +76,14 @@ public class ContractEntity
 		int result = id;
 		result = 31 * result + ( validFrom != null ? validFrom.hashCode() : 0 );
 		result = 31 * result + ( validTo != null ? validTo.hashCode() : 0 );
-		result = 31 * result + ( validDates != null ? validDates.hashCode() : 0 );
 		return result;
+	}
+
+	public Timestamp ValidFromAsDate(){
+		return new Timestamp(this.getValidFrom());
+	}
+
+	public Timestamp ValidToAsDate(){
+		return new Timestamp(this.getValidTo());
 	}
 }
