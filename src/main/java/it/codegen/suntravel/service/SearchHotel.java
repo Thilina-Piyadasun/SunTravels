@@ -5,6 +5,7 @@ import it.codegen.suntravel.beans.SearchResponseBean;
 import it.codegen.suntravel.dao.SearchRoomMvEntity;
 import it.codegen.suntravel.util.Converter;
 import it.codegen.suntravel.util.SingletonSessionFactory;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -88,11 +89,12 @@ public class SearchHotel
 
 				for(int i=1;i<size;i++){
 
-					List list2 = session.createQuery( "select distinct(hotelId) from RoomDetMvEntity where noOfRooms >=:rooms and maxAdults >=:adults and hotelId IN (:li)")
+					Query query= session.createQuery( "select distinct(hotelId) from RoomDetMvEntity where noOfRooms >=:rooms and maxAdults >=:adults and hotelId IN (:li)")
 							.setParameterList( "li",list)
 							.setParameter( "rooms",roomdet[i][0])
-							.setParameter(  "adults",roomdet[i][1])
-							.list();
+							.setParameter(  "adults",roomdet[i][1]);
+					query.setCacheable(true);
+							List list2=query.list();
 					list=list2;
 				}
 				System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");

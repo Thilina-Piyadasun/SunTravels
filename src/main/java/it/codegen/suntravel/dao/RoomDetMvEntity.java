@@ -1,11 +1,17 @@
 package it.codegen.suntravel.dao;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by thilinap on 4/21/2017.
  */
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Table(name = "ROOM_DET_MV", schema = "THILINAP", catalog = "")
 @IdClass(RoomDetMvEntityPK.class)
 public class RoomDetMvEntity

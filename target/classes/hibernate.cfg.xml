@@ -14,7 +14,8 @@
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.show_sql">true</property>
 
-        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.EhCacheProvider</property>
 
         <!--enable second level cache and query cache-->
      <!--   <property name="transaction.factory_class">
@@ -24,7 +25,7 @@
         <property name="hibernate.cache.use_second_level_cache">false</property>
         <property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
 -->
-
+        <property name="hibernate.cache.provider_class">org.hibernate.cache.NocacheP</property>
         <mapping class="it.codegen.suntravel.dao.ContractEntity"/>
         <mapping class="it.codegen.suntravel.dao.CountryEntity"/>
         <mapping class="it.codegen.suntravel.dao.HotelEntity"/>
